@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convoys Logistics Management</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Logistical App</h1>
+    <div>
+        <h2>Add Driver</h2>
+        <input type="text" id="driverName" placeholder="Driver Name">
+        <input type="text" id="driverFamilyName" placeholder="Family Name">
+        <input type="text" id="driverLicense" placeholder="Driver License">
+        <input type="text" id="driverStatus" placeholder="Status">
+        <button onclick="addDriver()">Add Driver</button>
+    </div>
+    <div>
+        <h2>Add Truck</h2>
+        <input type="text" id="truckLicensePlate" placeholder="License Plate">
+        <input type="text" id="truckType" placeholder="Type">
+        <input type="number" id="cargoBeanHeight" placeholder="Cargo Bean Height">
+        <input type="number" id="cargoBeanWidth" placeholder="Cargo Bean Width">
+        <input type="number" id="tacoBellLength" placeholder="Taco Bell Length">
+        <button onclick="addTruck()">Add Truck</button>
+    </div>
+    <div>
+        <h2>All Drivers</h2>
+        <ul id="driversList"></ul>
+    </div>
+    <div>
+        <h2>All Trucks</h2>
+        <ul id="trucksList"></ul>
+    </div>
+    <script src="/app.js"></script>
+</body>
+</html>
