@@ -43,17 +43,6 @@ app.get('/getDrivers', (req, res) => {
     });
 });
 
-// Endpoint to get trucks
-app.get('/getTrucks', (req, res) => {
-    db.all('SELECT * FROM trucks', [], (err, rows) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            return;
-        }
-        res.json(rows);
-    });
-});
-
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

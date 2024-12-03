@@ -19,6 +19,13 @@ let db = new sqlite3.Database('./src/database.sqlite', (err) => {
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Endpoint to add a new driver
 app.post('/addDriver', (req, res) => {
     const { name, familyName, driverLicense, status } = req.body;
@@ -29,6 +36,19 @@ app.post('/addDriver', (req, res) => {
             return;
         }
         res.json({ id: this.lastID });
+    });
+});
+
+app.post('/addTruck', (req, res) => {
+    const { licensePlate, type, cargoBeanHeight, cargoBeanWidth, tacoBellLength } = req.body;
+    console.log('Received Truck Data:', req.body);
+    const truck = new Truck(licensePlate, type, cargoBeanHeight, cargoBeanWidth, tacoBellLength);
+    db.run(`INSERT INTO trucks(licensePlate, type, cargoBeanHeight, cargoBeanWidth, tacoBellLength) VALUES(?, ?, ?, ?, ?)`, 
+        [truck.licensePlate, truck.type, truck.cargoBeanHeight, truck.cargoBeanWidth, truck.tacoBellLength], function(err) {
+        if (err) {
+            return console.log(err.message);
+        }
+        res.send({ id: this.lastID });
     });
 });
 
@@ -43,12 +63,10 @@ app.get('/getDrivers', (req, res) => {
     });
 });
 
-// Endpoint to get trucks
-app.get('/getTrucks', (req, res) => {
-    db.all('SELECT * FROM trucks', [], (err, rows) => {
+app.get('/trucks', (req, res) => {
+    db.all(`SELECT * FROM trucks`, [], (err, rows) => {
         if (err) {
-            res.status(500).json({ error: err.message });
-            return;
+            throw err;
         }
         res.json(rows);
     });

@@ -115,7 +115,7 @@ async function addTruck() {
 // Function to load drivers from the server
 async function loadDrivers() {
     try {
-        const response = await fetch('/getDrivers');
+        const response = await fetch('/drivers'); // Update the URL here
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -141,30 +141,27 @@ async function loadDrivers() {
 
 // Function to load trucks from the server
 async function loadTrucks() {
-    try {
-        const response = await fetch('/getTrucks');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const trucks = await response.json();
-        const tbody = document.getElementById('trucksTable');
-        tbody.innerHTML = ''; // Clear existing rows
+    // Fetch the list of trucks from the server
+    const response = await fetch('/trucks');
+    const trucks = await response.json();
 
-        trucks.forEach(truck => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${truck.licensePlate}</td>
-                <td>${truck.type}</td>
-                <td>${truck.cargoBeanHeight}</td>
-                <td>${truck.cargoBeanWidth}</td>
-                <td>${truck.tacoBellLength}</td>
-                <td><button onclick="this.closest('tr').remove()">Delete</button></td>
-            `;
-            tbody.appendChild(row);
-        });
-    } catch (error) {
-        console.error('Failed to load trucks:', error);
-    }
+    // Get the table body element where trucks are listed
+    const tbody = document.getElementById('trucksTable');
+    tbody.innerHTML = ''; // Clear the table body
+
+    // Iterate over each truck and create a row for each
+    trucks.forEach(truck => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${truck.licensePlate}</td>
+            <td>${truck.type}</td>
+            <td>${truck.cargoHeight}</td>
+            <td>${truck.cargoWidth}</td>
+            <td>${truck.cargoLength}</td>
+            <td><button onclick="this.closest('tr').remove()">Delete</button></td>
+        `;
+        tbody.appendChild(row); // Append the row to the table body
+    });
 }
 
 // Load drivers and trucks when the page loads
