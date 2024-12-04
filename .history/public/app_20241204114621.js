@@ -130,7 +130,7 @@ async function loadDrivers() {
                 <td>${driver.familyName}</td>
                 <td>${driver.driverLicense}</td>
                 <td>${driver.status}</td>
-                <td><button onclick="deleteDriver(${driver.id}).then(() => this.closest('tr').remove())">Delete</button></td>
+                <td><button onclick="this.closest('tr').remove()">Delete</button></td>
             `;
             tbody.appendChild(row);
         });
